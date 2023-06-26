@@ -7,8 +7,7 @@ For ease of use move this script to a location of your choice (*i use Documents/
 
 **--find**
 
-use without any arguments to list all steam games and all non-steam games, non-steam games are only
-found in the paths used & setup in your steam client.
+use without any arguments to list all steam games and all non-steam games, non-steam games are only found in the paths used & setup in your steam client.
   
 **--find Name**
 
@@ -30,7 +29,6 @@ When you have a list of Executables for the Index you specified this will launch
 
 **--deps Index DepList**
 
-this can install up to 13 dependancys, if more are required then enclose them all in double quoptes
-As usual with ProtonTricks, there will often be issues installing dependencies as not all function correctly such as .NET Framework
+this can install up to 13 dependancys, if more are required then enclose them all in double quoptes.  As usual with ProtonTricks, there will often be issues installing dependencies as not all function correctly such as .NET Framework
 
 ![Alt text](/steamtool.jpg?raw=true "SteamTool Screenshot")
