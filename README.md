@@ -1,10 +1,10 @@
-### SteamTool
+## SteamTool
 Bash script for managing SteamDeck proton installed games via the ProtonTricks Flatpak.
 
 For ease of use move this script to a location of your choice (*i use Documents/Linux-Scripts*) then symlink the script to **~/.local/bin/steamtool**, make sure **~/.local/bin** is part of your **PATH**.
 ---------------------------------------------------------------------------------------------
 
-### List of available commands.
+## List of available commands.
 
 **--find**
 
@@ -15,7 +15,7 @@ found in the paths used & setup in your steam client.
 
 Same as above but only lists games containing the text you specify.
 
-### When using --find or --exe all output will be prefixed with an Index number, this Index number is used for all other commands
+## When using --find or --exe all output will be prefixed with an Index number, this Index number is used for all other commands
 
 **--open Index**
 
