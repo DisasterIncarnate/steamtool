@@ -15,7 +15,7 @@ found in the paths used & setup in your steam client.
 
 Same as above but only lists games containing the text you specify.
 
-### When using --find all output will be prefixed with an Index number, this Index number is used for all other commands
+### When using --find or --exe all output will be prefixed with an Index number, this Index number is used for all other commands
 
 **--open Index**
 
