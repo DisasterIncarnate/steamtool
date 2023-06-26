@@ -14,7 +14,7 @@ found in the paths used & setup in your steam client.
 ### --find <Name>
 Same as above but only lists games containing the text you specify.
 
-## When using --find all output will be prefixed with an Index number, this Index number is used for all other commands
+### When using --find all output will be prefixed with an Index number, this Index number is used for all other commands
 
 ### --open <Index>
 Opens the start-in or install path for the selected game via Index number in Dolphin File Browser.
