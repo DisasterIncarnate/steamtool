@@ -24,6 +24,16 @@ if [[ $CHKA == "" ]] && [[ $CHKB == "" ]]; then
   echo 'fi' >> $HOME/.bashrc
   echo "PATH was not set to check $HOME/.local/bin for scripts/commands, this has been corrected."
   echo "** You need to close this terminal window and re-open for changes to take effect **"
+  exit
+fi
+
+# Check user has the Flatpak ProtonTricks installed and give options if not found.
+CHKA=$(flatpak run com.github.Matoking.protontricks -V | grep -i "not installed")
+if [[ $CHKA != "" ]]; then
+  echo "This script requires Protontricks, Please install via the Discover Store or"
+  echo "open konsole and type: flatpak install flathub com.github.Matoking.protontricks"
+  echo ""
+  exit
 fi
 
 # Check for different Steam installs.
@@ -41,7 +51,7 @@ if [[ ${1,,} == "--exe" ]] || [[ ${1,,} == "--open" ]] || [[ ${1,,} == "--run" ]
       echo "Listing common Windows executable files..."
       echo "Use 'steamtool --run <indexnumber>' to launch a listed executable file..."
       echo "You can only --run files if you have launched a game at least once to"
-      echo "Setup the environment and APPID required by ProtonTricks which this script uses..."
+      echo "use the environment and APPID required by ProtonTricks which this script uses..."
       echo "------------------------------------------"
       find "$xtrpath" -type f \( -iname \*.exe -o -iname \*.com -o -iname *.bat \) > /dev/shm/SteamTool/test-exelist
       echo "INDEX   LOCATION"
@@ -49,7 +59,7 @@ if [[ ${1,,} == "--exe" ]] || [[ ${1,,} == "--open" ]] || [[ ${1,,} == "--run" ]
     fi
     if [[ ${1,,} == "--open" ]]; then
       echo "Opening selected game folder..."
-      dolphin "$xtrpath" > /dev/null 2>&1
+      dolphin "$xtrpath" > /dev/null 2>&1 &
     fi
     if [[ ${1,,} == "--run" ]]; then
       if [[ $2 == "" ]]; then
@@ -57,12 +67,12 @@ if [[ ${1,,} == "--exe" ]] || [[ ${1,,} == "--open" ]] || [[ ${1,,} == "--run" ]
       else
         if test -f "/dev/shm/SteamTool/test-lastexe"; then
           echo "Running Executable in Game Location..."
-          echo "Please Wait..."
+          echo "Please Wait, this can take a while depending on the game..."
           echo ""
           lastexe=$(cat /dev/shm/SteamTool/test-lastexe)
           xtrid=$(sed -n "$lastexe"p /dev/shm/SteamTool/test-id)
           xtrexe=$(sed -n "$2"p /dev/shm/SteamTool/test-exelist)
-          WINEESYNC=1 WINEFSYNC=1 flatpak run --command=protontricks-launch com.github.Matoking.protontricks --appid "$xtrid" "$xtrexe" > /dev/null 2>&1
+          WINEESYNC=1 WINEFSYNC=1 flatpak run --command=protontricks-launch com.github.Matoking.protontricks --appid "$xtrid" "$xtrexe" > /dev/null 2>&1 &
         else
           echo "Cannot --run something until you have used --exe to search for runnable files..."
           echo ""
