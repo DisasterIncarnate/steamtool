@@ -15,7 +15,6 @@ if ! test -f "$TESTRAM"; then
 fi
 
 # Check that PATH includes $HOME/.local/bin
-PATHFOUND="False"
 CHKA=$(cat $HOME/.profile | grep -i "HOME/.local/bin:" | grep -i "PATH")
 CHKB=$(cat $HOME/.bashrc | grep -i "HOME/.local/bin:" | grep -i "PATH")
 if [[ $CHKA == "" ]] && [[ $CHKB == "" ]]; then
