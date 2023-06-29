@@ -14,6 +14,19 @@ if ! test -f "$TESTRAM"; then
   echo "OK" > /dev/shm/SteamTool/RAMACTIVE
 fi
 
+# Check that PATH includes $HOME/.local/bin
+PATHFOUND="False"
+CHKA=$(cat $HOME/.profile | grep -i "HOME/.local/bin:" | grep -i "PATH")
+CHKB=$(cat $HOME/.bashrc | grep -i "HOME/.local/bin:" | grep -i "PATH")
+if [[ $CHKA == "" ]] && [[ $CHKB == "" ]]; then
+  # No PATH Found, add PATH to .bashrc
+  echo 'if [ -d "$HOME/.local/bin" ] ; then' >> $HOME/.bashrc
+  echo 'PATH="$HOME/.local/bin:$PATH"' >> $HOME/.bashrc
+  echo 'fi' >> $HOME/.bashrc
+  echo "PATH was not set to check $HOME/.local/bin for scripts/commands, this has been corrected."
+  echo "** You need to close this terminal window and re-open for changes to take effect **"
+fi
+
 # Check for different Steam installs.
 # Find main LibraryFolder.VDF file location.
 MAINVDF=`find /home/$USER -maxdepth 6 -name "libraryfolders.vdf" | grep -i "steamapps"`
