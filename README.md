@@ -1,7 +1,7 @@
 ## SteamTool
 Bash script for managing SteamDeck proton installed games via the ProtonTricks Flatpak.
 
-For ease of use move this script to a location of your choice (*i use Documents/Linux-Scripts*) then symlink the script to **~/.local/bin/steamtool**, make sure **~/.local/bin** is part of your **PATH**.
+For ease of use move this script to a location of your choice (*i use Documents/Linux-Scripts*) then symlink the script to **~/.local/bin/steamtool**, make sure **~/.local/bin** is part of your **PATH**.  This script will attempt to check is PATH checks this location and will offer to add the needed PATH to your .bashrc file. 
 
 ## List of available commands.
 
