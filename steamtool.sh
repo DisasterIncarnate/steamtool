@@ -68,11 +68,12 @@ if [[ ${1,,} == "--exe" ]] || [[ ${1,,} == "--open" ]] || [[ ${1,,} == "--run" ]
         if test -f "/dev/shm/SteamTool/test-lastexe"; then
           echo "Running Executable in Game Location..."
           echo "Please Wait, this can take a while depending on the game..."
+          echo "Creating 'SteamTool-Exe-Log.txt' Logfile in your Documents folder"
           echo ""
           lastexe=$(cat /dev/shm/SteamTool/test-lastexe)
           xtrid=$(sed -n "$lastexe"p /dev/shm/SteamTool/test-id)
           xtrexe=$(sed -n "$2"p /dev/shm/SteamTool/test-exelist)
-          WINEESYNC=1 WINEFSYNC=1 flatpak run --command=protontricks-launch com.github.Matoking.protontricks --appid "$xtrid" "$xtrexe" > /dev/null 2>&1 &
+          WINEESYNC=1 WINEFSYNC=1 flatpak run --command=protontricks-launch com.github.Matoking.protontricks --appid "$xtrid" "$xtrexe" > $HOME/Documents/SteamTool-Exe-Log.txt 2>&1 &
         else
           echo "Cannot --run something until you have used --exe to search for runnable files..."
           echo ""
