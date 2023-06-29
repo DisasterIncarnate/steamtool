@@ -13,7 +13,7 @@ use without any arguments to list all steam games and all non-steam games, non-s
 
 Same as above but only lists games containing the text you specify.
 
-## To use all other commands a --find operation must be used to generate an index of files which all the other commands use, when using --find and --exe all output will be prefixed with an Index number, this Index number is used for all other commands
+## To use all other commands a --find command must be used to generate an index of files which all the other commands use, the same applies to --exe which generates a separate index list for use with --run.
 
 **--open Index**
 
