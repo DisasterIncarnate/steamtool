@@ -36,6 +36,25 @@ if [[ $CHKA != "" ]]; then
   exit
 fi
 
+# Show commandlist if nothing if no commands specified
+if [[ ${1,,} == "" ]]; then
+  echo "HELP: List of available commands"
+  echo "--------------------------------"
+  echo "--find and --exe produce a numbered/indexed list which the other commands use for ease of use."
+  echo "EG: if you used --find Skyrim and you only had 1 skyrim game it would be listed as '1 Skyrim'"
+  echo "you could then use --open 1 or --exe 1 to refer to skyrim instead of finding the details the long way."
+  echo "--------------------------------"
+  echo ""
+  echo "--find                 Lists all Steam and Non-Steam games detected by ProtonTricks."
+  echo "--find <name>          Lists only games partially matching the word you enter."
+  echo ""
+  echo "--open <index>         Opens Dolphin Browser in the location of a games install/start-in path."
+  echo "--deps <index> <list>  Install dependency(s) into a games proton container."
+  echo "--exe <index>          Lists all .bat .com & .exe files in the proton container you select."
+  echo "--run <index>          Attempt to launch an executable in your previously specified proton container."
+  exit
+fi
+
 # Check for different Steam installs.
 # Find main LibraryFolder.VDF file location.
 MAINVDF=`find /home/$USER -maxdepth 6 -name "libraryfolders.vdf" | grep -i "steamapps"`
