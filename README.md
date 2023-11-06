@@ -32,3 +32,5 @@ When you have a list of Executables for the Index you specified this will launch
 this can install up to 13 dependencies, if more are required then enclose them all in double quoptes.  As usual with ProtonTricks, there will often be issues installing dependencies as not all function correctly such as .NET Framework
 
 ![Alt text](/steamtool.jpg?raw=true "SteamTool Screenshot")
+
+https://www.youtube.com/watch?v=4NFKpRzDQQc
