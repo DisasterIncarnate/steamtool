@@ -62,20 +62,21 @@ if [[ ${1,,} == "" ]]; then
   echo "you could then use --open 1 or --exe 1 to refer to skyrim instead of finding the details the long way."
   echo "--------------------------------"
   echo ""
-  echo "--find                 Lists all Steam and Non-Steam games detected by ProtonTricks."
-  echo "--find <name>          Lists only games partially matching the word you enter."
+  echo "--find                  Lists all Steam and Non-Steam games detected by ProtonTricks."
+  echo "--find <name>           Lists only games partially matching the word you enter."
   echo ""
-  echo "--open <index>         Opens Dolphin Browser in the location of a games install/start-in path."
-  echo "--deps <index> <list>  Install dependency(s) into a games proton container."
-  echo "--exe <index>          Lists all .bat .com & .exe files in the proton container you select."
-  echo "--run <index>          Attempt to launch an executable in your previously specified proton container."
+  echo "--open <index>          Opens Dolphin Browser in the location of a games install/start-in path."
+  echo "--deps <index> <list>   Install dependency(s) into a games proton container."
+  echo "--exe <index>           Lists all .bat .com & .exe files in the proton container you select."
+  echo "--search <index> <name> List all files in <index> partially matching the word you enter."
+  echo "--run <index>           Attempt to launch an executable in your previously specified proton container."
   exit
 fi
 
 # Check for different Steam installs.
 # Find main LibraryFolder.VDF file location.
 MAINVDF=`find /home/$USER -maxdepth 8 -name "libraryfolders.vdf" | grep -i "steamapps"`
-if [[ ${1,,} == "--exe" ]] || [[ ${1,,} == "--open" ]] || [[ ${1,,} == "--run" ]]; then
+if [[ ${1,,} == "--exe" ]] || [[ ${1,,} == "--open" ]] || [[ ${1,,} == "--run" ]] | [[ ${1,,} == "--search" ]]; then
   # Find common windows executable files.
   if [[ $2 == "" ]]; then
     echo "Enter an index number to continue..."
@@ -90,7 +91,6 @@ if [[ ${1,,} == "--exe" ]] || [[ ${1,,} == "--open" ]] || [[ ${1,,} == "--run" ]
       echo "use the environment and APPID required by ProtonTricks which this script uses..."
       echo "------------------------------------------"
       find "$xtrpath" -type f \( -iname \*.exe -o -iname \*.com -o -iname *.bat -o -iname \*.AppImage \) > /dev/shm/SteamTool/test-exelist
-      # find "$xtrpath" -type f \( -iname \*.exe -o -iname \*.com -o -iname *.bat \) > /dev/shm/SteamTool/test-exelist
       echo "INDEX   LOCATION"
       cat -b -n /dev/shm/SteamTool/test-exelist
     fi
@@ -98,6 +98,21 @@ if [[ ${1,,} == "--exe" ]] || [[ ${1,,} == "--open" ]] || [[ ${1,,} == "--run" ]
       echo "Opening selected game folder..."
       dolphin "$xtrpath" > /dev/null 2>&1 &
     fi
+
+    if [[ ${1,,} == "--search" ]]; then
+      if [[ $2 == "" ]]; then
+        echo "You need to provide an Index number..."
+      else
+        if [[ $3 == "" ]]; then
+          echo "I need something to search for..."
+        else
+          echo "List of files containing '$3'..."
+          find "$xtrpath" -type f \( -iname \*$3* \) > /dev/shm/SteamTool/test-searchlist
+          cat -b -n /dev/shm/SteamTool/test-searchlist
+        fi
+      fi
+    fi
+
     if [[ ${1,,} == "--run" ]]; then
       if [[ $2 == "" ]]; then
         echo "You need to provide an Index number..."
