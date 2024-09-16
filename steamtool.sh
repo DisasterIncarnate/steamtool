@@ -45,7 +45,7 @@ if [[ $CWARN == "YES" ]]; then
   exit
 fi
 
-CHKC=$(protontricks -V | grep -i "not installed")
+CHKC=$(flatpak run com.github.Matoking.protontricks -V | grep -i "not installed" 2>/dev/null)
 if [[ $CHKC != "" ]]; then
   echo "This script requires Protontricks, Please install via the Discover Store or"
   echo "open konsole and type: flatpak install flathub com.github.Matoking.protontricks"
@@ -125,7 +125,7 @@ if [[ ${1,,} == "--exe" ]] || [[ ${1,,} == "--open" ]] || [[ ${1,,} == "--run" ]
           lastexe=$(cat /dev/shm/SteamTool/test-lastexe)
           xtrid=$(sed -n "$lastexe"p /dev/shm/SteamTool/test-id)
           xtrexe=$(sed -n "$2"p /dev/shm/SteamTool/test-exelist)
-          WINEESYNC=1 WINEFSYNC=1 protontricks-launch --appid "$xtrid" "$xtrexe" > $HOME/Documents/SteamTool-Exe-Log.txt 2>&1 &
+          WINEESYNC=1 WINEFSYNC=1 flatpak run --command=protontricks-launch com.github.Matoking.protontricks --appid "$xtrid" "$xtrexe" > $HOME/Documents/SteamTool-Exe-Log.txt 2>&1 &
         else
           echo "Cannot --run something until you have used --exe to search for runnable files..."
           echo ""
@@ -157,7 +157,7 @@ if [[ ${1,,} == "--deps" ]]; then
       echo "Specify the Dependency you need to install...   (EG: corefonts)"
     else
       # Run protontricks and try to install dependencies
-      WINEESYNC=1 WINEFSYNC=1 protontricks "$xtrid" $3 $4 $5 $6 $7 $8 $9 ${10} ${11} ${12} ${13} ${14} ${15} #>/dev/null 2>&1
+      WINEESYNC=1 WINEFSYNC=1 flatpak run com.github.Matoking.protontricks "$xtrid" $3 $4 $5 $6 $7 $8 $9 ${10} ${11} ${12} ${13} ${14} ${15} #>/dev/null 2>&1
       echo ""
     fi
   fi
@@ -189,8 +189,8 @@ paths="/dev/shm/SteamTool/test-paths"
 
 # do clever stuff for compatdata/non-steam installed games and find start-in path which we cant get
 # from the usual text based .VDF file(s), as the .VDF file used for non-steam game locations/etc is binary.
-# and i am not smart enough to extract the information frmo a binary file, so we have this workaround.
-protontricks -l | grep -i "Non-Steam shortcut" | grep -i "$2" 1>/dev/shm/SteamTool/compat-paths 2>/dev/null
+# and i am not smart enough to extract the information from a binary file, so we have this workaround.
+flatpak run com.github.Matoking.protontricks -l | grep -i "Non-Steam shortcut" | grep -i "$2" 1>/dev/shm/SteamTool/compat-paths 2>/dev/null
 while IFS= read -r line; do
     newname=${line/"Non-Steam shortcut: "/}
     newname=${newname::-13}
@@ -207,7 +207,9 @@ while IFS= read -r line; do
         echo "$newname (Non-Steam)"
         echo $newid >> /dev/shm/SteamTool/test-id
         echo $newname >> /dev/shm/SteamTool/test-name
-        protontricks -c pwd $newid >> /dev/shm/SteamTool/test-locat
+        newname=$(flatpak run com.github.Matoking.protontricks --no-runtime -c "env" $newid | grep "STEAM_APP_PATH" 2>/dev/null)
+        echo "${newname:15}" 1>>/dev/shm/SteamTool/test-locat 2>/dev/null
+
       else
         if [[ $2 == $GINDEX ]]; then
           echo "Match: $GINDEX $app_id $app_name"
